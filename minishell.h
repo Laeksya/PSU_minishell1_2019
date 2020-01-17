@@ -15,6 +15,11 @@ void my_putchar(char c);
 int my_strlen(char const *str);
 
 char *find_str(char **env, char *str_tofind);
+void display_usr(char **env);
+void cd_f(char **env, char *line);
+void env_f(char **env, char *line);
+int my_exit(char *line);
+
 
 
 #endif /* !MINISHELL_H_ */

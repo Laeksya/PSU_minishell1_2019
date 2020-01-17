@@ -9,7 +9,8 @@ NAME	=	mysh
 NAME_TESTS = 	test_
 
 SRC	=	main.c 				\
-		my_string.c 		\
+		my_strtools.c		\
+		my_builtin.c 		\
 		display.c
 
 CFLAGS +=	-Wextra -Wall -g3

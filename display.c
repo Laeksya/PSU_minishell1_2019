@@ -36,3 +36,13 @@ int my_put_nbr(int nb)
     my_putchar(nb % 10 + '0');
     return (0);
 }
+
+void display_usr(char **env)
+{
+    my_putchar('[');
+    my_putstr(find_str(env, "USER="));
+    my_putchar('@');
+    my_putstr(find_str(env, "HOSTNAME="));
+    my_putchar(']');
+    my_putchar('>');
+}
