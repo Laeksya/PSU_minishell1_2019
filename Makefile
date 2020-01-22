@@ -8,7 +8,17 @@
 NAME	=	mysh
 NAME_TESTS = 	test_
 
-SRC	=	main.c 				\
+SRC	=	my_printf/my_strlen.c		 		\
+		my_printf/my_put_nbr.c				\
+		my_printf/my_putchar.c				\
+		my_printf/my_putstr.c				\
+		my_printf/my_putnbr_base.c 			\
+		my_printf/my_putnbr_unsigned.c   	\
+		my_printf/my_putnbr_base_unsigned.c \
+		my_printf/function_for_printf2.c 	\
+		my_printf/function_for_printf1.c    \
+		my_printf/my_printf.c				\
+		main.c 				\
 		my_strtools.c		\
 		my_builtin.c 		\
 		display.c

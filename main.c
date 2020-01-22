@@ -11,6 +11,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+int my_isnb(char c)
+{
+    if (c >= '0' && c <= '9')
+        return (1);
+    return (0);
+}
+
+int my_getnbr(char const *str)
+{
+    int res = 0;
+    int sign = 1;
+    int i = 0;
+
+    for (; str[i] == '+' || str[i] == '-'; i++)	{
+    	if (str[i] == '-')
+            sign *= -1;
+    }
+    for (; str[i] == ' '; ++i);
+    for (; str[i] != '\0' && my_isnb(str[i]); i++) {
+    	res = res * 10 + str[i] - '0';
+    }
+    return (sign * res);
+}
+
 char *find_str(char **env, char *str_tofind)
 {
     int len_ofstr = my_strlen(str_tofind);
@@ -26,6 +50,7 @@ int main(int ac, char **av, char **env)
     char *line = NULL;
     size_t size = 0;
     __ssize_t return_getline = 0;
+    int exit_stat = 0;
 
     for (;;) {
         display_usr(env);
@@ -34,9 +59,8 @@ int main(int ac, char **av, char **env)
             return (33);
         cd_f(env, line);
         env_f(env, line);
-        if (my_exit(line) == 0)
+        if (my_exit(line, exit_stat) != 1)
             break;
     }
-    free(line);
-    return (0);
+    return (my_exit(line, exit_stat));
 }

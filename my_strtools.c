@@ -5,13 +5,14 @@
 ** help
 */
 
-int my_strlen(char const *str)
+int my_str_isnum(char const *str)
 {
-    int i = 0;
-
-    while (str[i] != '\0')
-        i++;
-    return (i);
+    while (*str != '\0') {
+        if (!((*str >= '0' && *str <= '9')))
+            return (0);
+        str++;
+    }
+    return (1);
 }
 
 int my_strcmp(char const *s1, char const *s2)

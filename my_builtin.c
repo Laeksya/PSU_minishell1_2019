@@ -10,10 +10,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "my_printf/my.h"
 
-int my_exit(char *line)
+int my_exit(char *line, int exit_status)
 {
-    if (my_strcmp(line, "exit\n") == 0)
+    if (my_strncmp(line, "exit", 4) == 0) {
+        if (my_str_isnum(line + 5) == 0) {
+            my_printf("%s: Expression Syntax.\n", line + 5);
+            return (1);
+        }
+        else {
+            exit_status = my_getnbr(line + 4);
+            return (exit_status);
+        }
+    }
+    else if (my_strcmp(line, "exit\n") == 0)
         return (0);
 }
 
@@ -28,12 +39,13 @@ void env_f(char **env, char *line)
 
 void cd_f(char **env, char *line)
 {
-    for (int i = 0; line[i] != '\n'; i++) {
-        if (my_strcmp(line, "cd ") == 0) {
-            chdir(line + 3);
-            my_putstr(line + 3);
-        }
-        if (my_strcmp(line, "cd\n") == 0)
-            chdir(find_str(env, "HOME="));
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (line[i] == '\n')
+            line[i] = '\0';
     }
+    if (my_strcmp(line, "cd") == 0)
+        chdir(find_str(env, "HOME="));
+    else if (line[0] == 'c' && line[1] == 'd')
+        if (chdir(line + 3) == -1)
+            my_printf("%s: No such file or directory.\n", line + 3);
 }
