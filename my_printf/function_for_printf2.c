@@ -7,7 +7,7 @@
 
 #include "my.h"
 
-void print_X(va_list ap)
+void print_xb(va_list ap)
 {
     my_putnbr_base_unsigned(va_arg(ap, unsigned int), "0123456789ABCDEF");
 }
@@ -19,6 +19,7 @@ void print_c(va_list ap)
 
 void print(va_list ap)
 {
+    (void)(ap);
     my_putchar('%');
 }
 

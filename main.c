@@ -45,6 +45,14 @@ char *find_str(char **env, char *str_tofind)
     return (NULL);
 }
 
+static void remove_newline(char *line)
+{
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (line[i] == '\n')
+            line[i] = '\0';
+    }
+}
+
 int main(int ac, char **av, char **env)
 {
     char *line = NULL;
@@ -52,15 +60,20 @@ int main(int ac, char **av, char **env)
     __ssize_t return_getline = 0;
     int exit_stat = 0;
 
+    (void)(ac);
+    (void)(av);
     for (;;) {
         display_usr(env);
         return_getline = getline(&line, &size, stdin);
         if (return_getline == EOF)
             return (33);
+        remove_newline(line);
         cd_f(env, line);
         env_f(env, line);
-        if (my_exit(line, exit_stat) != 1)
+        if (my_exit(line, exit_stat) != 1) {
+            my_putstr("exit\n");
             break;
+        }
     }
     return (my_exit(line, exit_stat));
 }

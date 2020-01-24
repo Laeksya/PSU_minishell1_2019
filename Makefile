@@ -5,6 +5,8 @@
 ## A Makefile to compile  and its tests
 ##
 
+CC	=	gcc
+
 NAME	=	mysh
 NAME_TESTS = 	test_
 
@@ -23,7 +25,7 @@ SRC	=	my_printf/my_strlen.c		 		\
 		my_builtin.c 		\
 		display.c
 
-CFLAGS +=	-Wextra -Wall -g3
+CFLAGS +=	-Wextra -Wall
 
 SRC_TESTS =
 OBJ	=	$(SRC:.c=.o)

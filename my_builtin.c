@@ -24,13 +24,12 @@ int my_exit(char *line, int exit_status)
             return (exit_status);
         }
     }
-    else if (my_strcmp(line, "exit\n") == 0)
-        return (0);
+    return (1);
 }
 
 void env_f(char **env, char *line)
 {
-    if (my_strcmp(line, "env\n") == 0)
+    if (my_strcmp(line, "env") == 0)
         for (int i = 0; env[i] != NULL; i++) {
             my_putstr(env[i]);
             my_putchar ('\n');
@@ -39,10 +38,6 @@ void env_f(char **env, char *line)
 
 void cd_f(char **env, char *line)
 {
-    for (int i = 0; line[i] != '\0'; i++) {
-        if (line[i] == '\n')
-            line[i] = '\0';
-    }
     if (my_strcmp(line, "cd") == 0)
         chdir(find_str(env, "HOME="));
     else if (line[0] == 'c' && line[1] == 'd')
