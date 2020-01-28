@@ -39,6 +39,7 @@ void tab_to_space(char *str);
 int space_nb(char *str);
 char **arr_alloc(int lines, int col);
 char **my_str_to_word_array(char *str);
+void remove_char(char *str);
 
 int my_isnb(char c);
 int my_getnbr(char const *str);

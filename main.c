@@ -45,6 +45,14 @@ char *find_str(char **env, char *str_tofind)
     return (NULL);
 }
 
+void remove_char(char *str)
+{
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == '\n')
+            str[i] = '\0';
+    }
+}
+
 int main(int ac, char **av, char **env)
 {
     char *line = NULL;
@@ -63,10 +71,10 @@ int main(int ac, char **av, char **env)
             my_putstr(" exit\n");
             return (0);
         }
+        remove_char(line);
         tab_to_space(line);
         array = my_str_to_word_array(line);
-        find_builtin(array, env);
-        if (my_exit(array, exit_stat) != 1) {
+        if (find_builtin(array, env) != 1) {
             my_putstr("exit\n");
             break;
         }

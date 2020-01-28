@@ -16,8 +16,14 @@ int find_builtin(char **array, char **env)
 {
     if (my_strncmp(array[0], "cd", 2) == 0)
         cd_f(env, array);
-    if (my_strncmp(array[0], "exit", 4) == 0)
-        my_exit(array, 0);
+    if (my_strncmp(array[0], "exit", 4) == 0) {
+        if (my_str_isnum(array[1]) == 0) {
+            my_printf("%s: Expression Syntax.\n", array[1]);
+            return (1);
+        }
+        else
+            my_exit(array, 0);
+    }
     if (my_strncmp(array[0], "env", 3) == 0)
         env_f(env);
 /*     if (my_strncmp(array[0], "setenv", 6) == 0)
@@ -29,15 +35,8 @@ int find_builtin(char **array, char **env)
 
 int my_exit(char **array, int exit_status)
 {
-    if (my_str_isnum(array[1]) == 0) {
-        my_printf("%s: Expression Syntax.\n", array[1]);
-        return (1);
-    }
-    else {
-        exit_status = my_getnbr(array[1]);
-        return (exit_status);
-    }
-    return (1);
+    exit_status = my_getnbr(array[1]);
+    return (exit_status);
 }
 
 void env_f(char **env)
