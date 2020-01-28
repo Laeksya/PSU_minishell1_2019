@@ -20,12 +20,13 @@ SRC	=	my_printf/my_strlen.c		 		\
 		my_printf/function_for_printf2.c 	\
 		my_printf/function_for_printf1.c    \
 		my_printf/my_printf.c				\
+		handling_array.c 					\
 		main.c 				\
 		my_strtools.c		\
 		my_builtin.c 		\
 		display.c
 
-CFLAGS +=	-Wextra -Wall
+CFLAGS +=	-Wextra -Wall -g3
 
 SRC_TESTS =
 OBJ	=	$(SRC:.c=.o)

@@ -12,35 +12,47 @@
 #include <unistd.h>
 #include "my_printf/my.h"
 
-int my_exit(char *line, int exit_status)
+int find_builtin(char **array, char **env)
 {
-    if (my_strncmp(line, "exit", 4) == 0) {
-        if (my_str_isnum(line + 5) == 0) {
-            my_printf("%s: Expression Syntax.\n", line + 5);
-            return (1);
-        }
-        else {
-            exit_status = my_getnbr(line + 4);
-            return (exit_status);
-        }
+    if (my_strncmp(array[0], "cd", 2) == 0)
+        cd_f(env, array);
+    if (my_strncmp(array[0], "exit", 4) == 0)
+        my_exit(array, 0);
+    if (my_strncmp(array[0], "env", 3) == 0)
+        env_f(env);
+/*     if (my_strncmp(array[0], "setenv", 6) == 0)
+        my_setenv(env, array);
+    if (my_strncmp(array[0], "unsetenv", 8) == 0)
+        my_unsetenv(env, array); */
+    return (0);
+}
+
+int my_exit(char **array, int exit_status)
+{
+    if (my_str_isnum(array[1]) == 0) {
+        my_printf("%s: Expression Syntax.\n", array[1]);
+        return (1);
+    }
+    else {
+        exit_status = my_getnbr(array[1]);
+        return (exit_status);
     }
     return (1);
 }
 
-void env_f(char **env, char *line)
+void env_f(char **env)
 {
-    if (my_strcmp(line, "env") == 0)
-        for (int i = 0; env[i] != NULL; i++) {
-            my_putstr(env[i]);
-            my_putchar ('\n');
-        }
+    for (int i = 0; env[i] != NULL; i++) {
+        my_putstr(env[i]);
+        my_putchar('\n');
+    }
 }
 
-void cd_f(char **env, char *line)
+void cd_f(char **env, char **array)
 {
-    if (my_strcmp(line, "cd") == 0)
+    if (my_strncmp(array[0], "cd", 2) == 0 && array[1] == NULL)
         chdir(find_str(env, "HOME="));
-    else if (line[0] == 'c' && line[1] == 'd')
-        if (chdir(line + 3) == -1)
-            my_printf("%s: No such file or directory.\n", line + 3);
+    else if (my_strncmp(array[0], "cd", 2))
+        if (chdir(array[1]) == -1)
+            my_printf("%s: No such file or directory.\n", array[1]);
 }
