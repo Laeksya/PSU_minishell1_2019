@@ -20,7 +20,7 @@ void tab_to_space(char *str)
     }
 }
 
-int space_nb(char *str)
+int space_nb(char *str, char c)
 {
     int space = 0;
 
@@ -28,7 +28,7 @@ int space_nb(char *str)
     if (my_strlen(str) >= 1)
         space++;
     for (int i = 0; i < my_strlen(str); i++) {
-        if (str[i] == ' ' && str[i + 1] != ' ')
+        if (str[i] == c && str[i + 1] != c)
             space++;
     }
     return (space);
@@ -48,17 +48,17 @@ char **tab_alloc(int lines, int col)
     return (array);
 }
 
-char **my_str_to_word_array(char *str)
+char **my_str_to_word_array(char *str, char c)
 {
     char **array;
     int x = 0;
 
-    array = tab_alloc(space_nb(str), 100);
+    array = tab_alloc(space_nb(str, c), 200);
 
     for (int i, y = 0; i < my_strlen(str); i++) {
         array[x][y] = str[i];
         y++;
-        if (str[i] == ' ' && str[i + 1] != ' ') {
+        if (str[i] == c && str[i + 1] != c) {
             x++;
             y = 0;
         }

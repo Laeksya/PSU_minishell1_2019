@@ -21,24 +21,32 @@ char **envdup(char **env)
     return (envcp);
 }
 
-int check_setenv_arg(char *str)
+char **my_unsetenv(char **env, char **array)
 {
-    int c = 0;
-
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == ' ' && str[i + 1] != ' ')
-            c++;
+    for (int i = 0; env[i] != NULL; i++) {
+        if (my_strcmp(env[i], array[1]) == 0)
+            env[i][0] = '\0';
+        else {
+            env = env;
+        }
     }
-    return (c);
+    return (env);
 }
 
-void my_setenv(char **env, char *line)
+char **my_setenv(char **env, char **array)
 {
-    if (my_strncmp(line, "setenv", 6) == 0)
-        check_setenv_arg();
-}
+    int len_name = my_strlen(array[1]);
+    int len_value = my_strlen(array[2]);
 
-void alloc_bigger_env(char **env, char *line)
-{
-
+    for (int i = 0; env[i] != NULL; i++) {
+        if (my_strcmp(env[i], array[1]) == 0) {
+            env[i] = malloc(sizeof(char) * (len_name + len_value + 2));
+            env[i][0] = '\0';
+            my_strcat(env[i], array[1]);
+            my_strcat(env[i], "=");
+            my_strcat(env[i], array[2]);
+        }
+        return (env);
+    }
+    return (NULL);
 }

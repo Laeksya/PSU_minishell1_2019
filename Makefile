@@ -21,10 +21,11 @@ SRC	=	my_printf/my_strlen.c		 		\
 		my_printf/function_for_printf1.c    \
 		my_printf/my_printf.c				\
 		handling_array.c 					\
+		handling_path.c						\
+		my_setenv.c 		\
 		main.c 				\
 		my_strtools.c		\
-		my_builtin.c 		\
-		display.c
+		my_builtin.c
 
 CFLAGS +=	-Wextra -Wall -g3
 

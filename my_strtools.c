@@ -57,3 +57,17 @@ char *my_strdup(char const *src)
     }
     return (str);
 }
+
+char *my_strcat(char *dest, char const *src)
+{
+    int c;
+    int n;
+
+    for ( n = 0; dest[n] != '\0'; n++) {
+    }
+    for (c = 0; src[c] != '\0'; c++) {
+        dest[n+c] = src[c];
+    }
+    dest[n+c] = '\0';
+    return (dest);
+}

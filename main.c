@@ -65,7 +65,7 @@ int main(int ac, char **av, char **env)
         return (84);
     (void)(av);
     for (;;) {
-        display_usr(env);
+        my_putstr("$>");
         return_getline = getline(&line, &size, stdin);
         if (return_getline == EOF) {
             my_putstr(" exit\n");
@@ -73,7 +73,9 @@ int main(int ac, char **av, char **env)
         }
         remove_char(line);
         tab_to_space(line);
-        array = my_str_to_word_array(line);
+        array = my_str_to_word_array(line, ' ');
+        if (array[0] == NULL)
+            my_putstr ("$>");
         if (find_builtin(array, env) != 1) {
             my_putstr("exit\n");
             break;
