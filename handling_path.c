@@ -11,7 +11,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 
 char *find_path(char **env, char **array)
@@ -24,11 +23,11 @@ char *find_path(char **env, char **array)
             return (array[0]);
     for (int i = 0; path_in_path[i] != NULL; i++) {
         total = malloc(sizeof(char) * (my_strlen(path_in_path[i]) +
-        my_strlen(array[1]) + 2));
+        my_strlen(array[0]) + 2));
         total[0] = '\0';
         my_strcat(total, path_in_path[i]);
         my_strcat(total, "/");
-        my_strcat(total, array[1]);
+        my_strcat(total, array[0]);
         if (access(total, X_OK) == 0)
             return (total);
         free(total);
@@ -59,7 +58,7 @@ int exec_path(char **env, char **array)
 int handling_path(char **array, char **env)
 {
     if (find_path(env, array) == NULL) {
-        write(2, array[1], my_strlen(array[1]) + 1);
+        write(2, array[0], my_strlen(array[0]) + 1);
         write(2, ": command not found.\n", 21);
         return (1);
     }

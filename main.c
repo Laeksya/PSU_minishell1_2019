@@ -81,6 +81,5 @@ int main(int ac, char **av, char **env)
             break;
         }
     }
-    /* free(array); */
     return (my_exit(array, exit_stat));
 }

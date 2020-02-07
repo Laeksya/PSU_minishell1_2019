@@ -55,7 +55,7 @@ char **my_str_to_word_array(char *str, char c)
 
     array = tab_alloc(space_nb(str, c), 200);
 
-    for (int i, y = 0; i < my_strlen(str); i++) {
+    for (int i, y = 0; str[i] != '\0'; i++) {
         array[x][y] = str[i];
         y++;
         if (str[i] == c && str[i + 1] != c) {
