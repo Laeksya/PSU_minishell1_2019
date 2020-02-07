@@ -12,7 +12,7 @@
 int my_str_isnum(char const *str)
 {
     while (*str != '\0') {
-        if (!(*str >= '0' && *str <= '9' || *str <= '\n'))
+        if (!((*str >= '0' && *str <= '9') || (*str <= '\n')))
             return (0);
         str++;
     }
