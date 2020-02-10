@@ -26,6 +26,8 @@ char *find_path(char **env, char **array)
         my_strlen(array[0]) + 2));
         total[0] = '\0';
         my_strcat(total, path_in_path[i]);
+        if (total[i] == ':')
+            total = '\0';
         my_strcat(total, "/");
         my_strcat(total, array[0]);
         if (access(total, X_OK) == 0)

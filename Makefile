@@ -37,7 +37,7 @@ OBJ_TESTS	=	$(SRC_TESTS:.c=.o)
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-			gcc -o $(NAME) $(OBJ)
+			gcc $(CFLAGS) -o $(NAME) $(OBJ)
 
 clean:
 		rm -f $(OBJ)
