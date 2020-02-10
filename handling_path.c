@@ -6,12 +6,23 @@
 */
 
 #include "minishell.h"
-#include "stddef.h"
-#include "stdlib.h"
+#include <stddef.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <string.h>
+
+static void signal_print(int status)
+{
+    if (WIFSIGNALED(status)) {
+        my_putstr(strsignal(WTERMSIG(status)));
+        if (WCOREDUMP(status))
+            my_putstr(" (core dumped)");
+        my_putchar('\n');
+    }
+}
 
 char *find_path(char **env, char **array)
 {
@@ -49,10 +60,11 @@ int exec_path(char **env, char **array)
         return (1);
     else if (pid == 0) {
         execve(path, array, env);
-        return (1);
+        exit (1);
     }
     else {
         wait(&status);
+        signal_print(status);
         return (1);
     }
 }
