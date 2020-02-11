@@ -50,3 +50,15 @@ char **my_setenv(char **env, char **array)
     }
     return (NULL);
 }
+
+void loop(__ssize_t return_getline, char *line, size_t size)
+{
+        my_putstr("$>");
+        return_getline = getline(&line, &size, stdin);
+        if (return_getline == EOF) {
+            my_putstr(" exit\n");
+            return (0);
+        }
+        remove_char(line);
+        tab_to_space(line);
+}

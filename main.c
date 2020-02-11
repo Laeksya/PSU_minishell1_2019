@@ -58,16 +58,13 @@ int main(int ac, char **av, char **env)
     char *line = NULL;
     char **array = NULL;
     size_t size = 0;
-    __ssize_t return_getline = 0;
     int exit_stat = 0;
 
     if (ac != 1)
         return (84);
-    (void)(av);
     for (;;) {
         my_putstr("$>");
-        return_getline = getline(&line, &size, stdin);
-        if (return_getline == EOF) {
+        if (getline(&line, &size, stdin) == EOF) {
             my_putstr(" exit\n");
             return (0);
         }

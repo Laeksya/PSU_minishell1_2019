@@ -24,7 +24,6 @@ int space_nb(char *str, char c)
 {
     int space = 0;
 
-    tab_to_space(str);
     if (my_strlen(str) >= 1)
         space++;
     for (int i = 0; i < my_strlen(str); i++) {
@@ -51,20 +50,18 @@ char **tab_alloc(int lines, int col)
 char **my_str_to_word_array(char *str, char c)
 {
     char **array = NULL;
+    int i = 0;
     int x = 0;
 
     array = tab_alloc(space_nb(str, c), 200);
-
-    for (int i, y = 0; str[i] != '\0'; i++) {
-        if (str[i] == c && str[i + 1] != c) {
-            x++;
-            y = 0;
-        }
-        else {
+    for (x = 0; str[i] != '\0'; x++) {
+        while (str[i] == c)
+            i++;
+        if (str[i] == '\0')
+            break;
+        for (int y = 0; str[i] != '\0' && str[i] != c; y++, i++)
             array[x][y] = str[i];
-            y++;
-        }
     }
-    array[x + 1] = NULL;
+    array[x] = NULL;
     return (array);
 }
