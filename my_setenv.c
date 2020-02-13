@@ -27,7 +27,7 @@ char **my_unsetenv(char **env, char **array)
         if (my_strcmp(env[i], array[1]) == 0)
             env[i][0] = '\0';
         else {
-            env = env;
+            return (env);
         }
     }
     return (env);
@@ -51,7 +51,7 @@ char **my_setenv(char **env, char **array)
     return (NULL);
 }
 
-void loop(__ssize_t return_getline, char *line, size_t size)
+/* void loop(__ssize_t return_getline, char *line, size_t size)
 {
         my_putstr("$>");
         return_getline = getline(&line, &size, stdin);
@@ -61,4 +61,4 @@ void loop(__ssize_t return_getline, char *line, size_t size)
         }
         remove_char(line);
         tab_to_space(line);
-}
+} */

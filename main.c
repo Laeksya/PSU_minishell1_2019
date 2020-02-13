@@ -45,12 +45,15 @@ char *find_str(char **env, char *str_tofind)
     return (NULL);
 }
 
-void remove_char(char *str)
+static int loop_tool(char **env, char **array)
 {
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '\n')
-            str[i] = '\0';
+    if (array[0] == NULL)
+            return (1);
+    if (find_builtin(array, env) != 1) {
+        my_putstr("exit\n");
+        return (0);
     }
+    return (1);
 }
 
 int main(int ac, char **av, char **env)
@@ -63,7 +66,7 @@ int main(int ac, char **av, char **env)
     if (ac != 1)
         return (84);
     for (;;) {
-        my_putstr("$>");
+        my_putstr("\033[1;32mLexi$hell\033[1;0m>");
         if (getline(&line, &size, stdin) == EOF) {
             my_putstr(" exit\n");
             return (0);
@@ -71,12 +74,8 @@ int main(int ac, char **av, char **env)
         remove_char(line);
         tab_to_space(line);
         array = my_str_to_word_array(line, ' ');
-        if (array[0] == NULL)
-            my_putstr ("$>");
-        if (find_builtin(array, env) != 1) {
-            my_putstr("exit\n");
+        if (loop_tool(env, array) == 0)
             break;
-        }
     }
     return (my_exit(array, exit_stat));
 }

@@ -17,9 +17,12 @@
 static void signal_print(int status)
 {
     if (WIFSIGNALED(status)) {
-        my_putstr(strsignal(WTERMSIG(status)));
+        if (WTERMSIG(status) == 8)
+            my_putstr("Floating exception");
+        else
+            my_putstr(strsignal(WTERMSIG(status)));
         if (WCOREDUMP(status))
-            my_putstr(" (core dumped)");
+            write(2, " (core dumped)", 14);
         my_putchar('\n');
     }
 }
@@ -61,23 +64,30 @@ int exec_path(char **env, char **array)
     else if (pid == 0) {
         execve(path, array, env);
         exit (1);
-    }
-    else {
+    } else {
         wait(&status);
         signal_print(status);
         return (1);
     }
+    return (0);
 }
 
 int handling_path(char **array, char **env)
 {
     if (find_path(env, array) == NULL) {
         write(2, array[0], my_strlen(array[0]) + 1);
-        write(2, ": command not found.\n", 21);
+        write(2, ": Command not found.\n", 21);
         return (1);
-    }
-    else {
+    } else {
         exec_path(env, array);
         return (1);
+    }
+}
+
+void remove_char(char *str)
+{
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == '\n')
+            str[i] = '\0';
     }
 }
